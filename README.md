@@ -1,12 +1,12 @@
-# Workbench plugin registry
+# Soshi Bench plugin registry
 
-The plugin index that [Workbench](https://github.com/soshibench/workbench)
+The plugin index that [Soshi Bench](https://github.com/soshibench/workbench)
 reads to show its Plugins → Browse tab.
 
 - [`registry.json`](registry.json) — the index the app fetches.
 - [`schema/registry.schema.json`](schema/registry.schema.json) — the JSON
   Schema it must satisfy, generated from the app's own validation schema by
-  `bun scripts/emit-registry-schema.ts` in the Workbench repository.
+  `bun scripts/emit-registry-schema.ts` in the Soshi Bench repository.
 - [`KEYS.md`](KEYS.md) — the signing key artifacts are verified against.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to get a plugin listed.
 
