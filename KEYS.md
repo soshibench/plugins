@@ -10,10 +10,11 @@ signature does not verify is refused by the app and by this repository's CI.
 The public key lives in [`registry.pub`](registry.pub) and is reproduced here:
 
 ```
-PASTE registry.pub HERE ONCE THE KEY EXISTS
+untrusted comment: minisign public key 6371E3A31987F5E9
+RWRjceOjGYf16TjzO/O7Lj6kjDH48IjSXavBSUiL5BvN7jbrmrTRmkoc
 ```
 
-Key id: _pending_
+Key id: `6371E3A31987F5E9`
 
 ## Where the private key lives
 

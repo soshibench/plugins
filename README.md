@@ -12,9 +12,8 @@ reads to show its Plugins → Browse tab.
 
 ## Status
 
-Not yet accepting listings. The registry signing key has not been published:
-[`registry.pub`](registry.pub) is still a placeholder, so no plugin can be
-signed or verified until it is replaced. The index is intentionally empty.
+Open for listings. The signing key is published in
+[`registry.pub`](registry.pub); no plugin is listed yet.
 
 The app fetches the index from:
 
