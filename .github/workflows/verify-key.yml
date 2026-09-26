@@ -1,0 +1,50 @@
+name: Verify the signing key
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install minisign
+        run: sudo apt-get update && sudo apt-get install -y minisign
+
+      - name: Restore the signing key
+        env:
+          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/registry.key"
+          printf '%s' "$MINISIGN_SECRET_KEY" > "$RUNNER_TEMP/registry.key"
+
+      - name: Recreate the public key from the secret key
+        env:
+          MINISIGN_SECRET_KEY_PASSWORD: ${{ secrets.MINISIGN_SECRET_KEY_PASSWORD }}
+        run: |
+          printf '%s\n' "$MINISIGN_SECRET_KEY_PASSWORD" \
+            | minisign -R -s "$RUNNER_TEMP/registry.key" -p "$RUNNER_TEMP/recreated.pub"
+
+      - name: Compare it with the published key
+        run: |
+          published=$(grep -v '^untrusted comment:' registry.pub | head -1)
+          recreated=$(grep -v '^untrusted comment:' "$RUNNER_TEMP/recreated.pub" | head -1)
+          if [ "$published" != "$recreated" ]; then
+            echo "::error::the stored secret key does not match registry.pub"
+            exit 1
+          fi
+          grep '^untrusted comment:' registry.pub
+
+      - name: Sign a probe and verify it with the published key
+        env:
+          MINISIGN_SECRET_KEY_PASSWORD: ${{ secrets.MINISIGN_SECRET_KEY_PASSWORD }}
+        run: |
+          printf 'signing key self test\n' > "$RUNNER_TEMP/probe.txt"
+          printf '%s\n' "$MINISIGN_SECRET_KEY_PASSWORD" \
+            | minisign -S -s "$RUNNER_TEMP/registry.key" \
+                -m "$RUNNER_TEMP/probe.txt" -x "$RUNNER_TEMP/probe.minisig"
+          minisign -V -p registry.pub -x "$RUNNER_TEMP/probe.minisig" -m "$RUNNER_TEMP/probe.txt"
+
+      - name: Remove the signing key
+        if: always()
+        run: shred -u "$RUNNER_TEMP/registry.key" || rm -f "$RUNNER_TEMP/registry.key"
