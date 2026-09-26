@@ -37,6 +37,17 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  PLUGIN_ID: ${{ inputs.plugin_id }}
+  VERSION: ${{ inputs.version }}
+  ENGINES_APP: ${{ inputs.engines_app }}
+  PLUGIN_API: ${{ inputs.plugin_api }}
+  ARTIFACTS: ${{ inputs.artifacts }}
+  DISPLAY_NAME: ${{ inputs.display_name }}
+  DESCRIPTION: ${{ inputs.description }}
+  PUBLISHER: ${{ inputs.publisher }}
+  HOMEPAGE: ${{ inputs.homepage }}
+
 jobs:
   sign:
     runs-on: ubuntu-latest
@@ -60,18 +71,19 @@ jobs:
           MINISIGN_SECRET_KEY_PASSWORD: ${{ secrets.MINISIGN_SECRET_KEY_PASSWORD }}
         run: |
           args=()
-          for pair in ${{ inputs.artifacts }}; do
+          read -ra pairs <<< "$ARTIFACTS"
+          for pair in "${pairs[@]}"; do
             args+=(--artifact "$pair")
           done
-          [ -n "${{ inputs.display_name }}" ] && args+=(--display-name "${{ inputs.display_name }}")
-          [ -n "${{ inputs.description }}" ] && args+=(--description "${{ inputs.description }}")
-          [ -n "${{ inputs.publisher }}" ] && args+=(--publisher "${{ inputs.publisher }}")
-          [ -n "${{ inputs.homepage }}" ] && args+=(--homepage "${{ inputs.homepage }}")
+          if [ -n "$DISPLAY_NAME" ]; then args+=(--display-name "$DISPLAY_NAME"); fi
+          if [ -n "$DESCRIPTION" ]; then args+=(--description "$DESCRIPTION"); fi
+          if [ -n "$PUBLISHER" ]; then args+=(--publisher "$PUBLISHER"); fi
+          if [ -n "$HOMEPAGE" ]; then args+=(--homepage "$HOMEPAGE"); fi
           bun scripts/add-listing.ts \
-            --id "${{ inputs.plugin_id }}" \
-            --version "${{ inputs.version }}" \
-            --engines-app "${{ inputs.engines_app }}" \
-            --plugin-api "${{ inputs.plugin_api }}" \
+            --id "$PLUGIN_ID" \
+            --version "$VERSION" \
+            --engines-app "$ENGINES_APP" \
+            --plugin-api "$PLUGIN_API" \
             "${args[@]}"
 
       - name: Remove the signing key
@@ -85,14 +97,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch="list/${{ inputs.plugin_id }}-${{ inputs.version }}"
+          branch="list/$PLUGIN_ID-$VERSION"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add registry.json
-          git commit -m "List ${{ inputs.plugin_id }}@${{ inputs.version }}"
+          git commit -m "List $PLUGIN_ID@$VERSION"
           git push -u origin "$branch"
           gh pr create \
             --base main \
-            --title "List ${{ inputs.plugin_id }}@${{ inputs.version }}" \
+            --title "List $PLUGIN_ID@$VERSION" \
             --body "Signed by the release workflow. Validation runs on this PR."
