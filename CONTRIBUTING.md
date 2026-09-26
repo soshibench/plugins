@@ -24,8 +24,10 @@ Open an issue titled `List <plugin id>@<version>` with:
 - the Workbench version range and `pluginApi` level the build targets
 - one download URL per platform, as `<platform>=<url>` pairs
 
-Platforms are `macos-arm64`, `macos-x64`, `linux-x64`, `win-x64`, or
-`universal` for a build with no native code.
+Platforms are `darwin-arm64`, `darwin-x64`, `linux-x64-gnu`,
+`linux-arm64-gnu`, `win32-x64-msvc`, or `universal` for a build with no native
+code. These are the exact tokens Workbench asks for, so a listing that uses
+any other spelling is rejected by CI and would be invisible in the app.
 
 ## What happens next
 

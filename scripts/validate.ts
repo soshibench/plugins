@@ -10,6 +10,15 @@ const INDEX_FILE = join(ROOT, "registry.json");
 const SCHEMA_FILE = join(ROOT, "schema", "registry.schema.json");
 const PUBLIC_KEY_FILE = join(ROOT, "registry.pub");
 
+const KNOWN_PLATFORMS = [
+  "universal",
+  "darwin-arm64",
+  "darwin-x64",
+  "linux-x64-gnu",
+  "linux-arm64-gnu",
+  "win32-x64-msvc",
+];
+
 interface Artifact {
   platform: string;
   url: string;
@@ -73,6 +82,11 @@ function validateShape(index: Index): void {
       }
       const platforms = new Set<string>();
       for (const artifact of version.artifacts) {
+        if (!KNOWN_PLATFORMS.includes(artifact.platform)) {
+          fail(
+            `${plugin.id}@${version.version} lists platform ${artifact.platform}, which Workbench never asks for; use one of ${KNOWN_PLATFORMS.join(", ")}`,
+          );
+        }
         if (platforms.has(artifact.platform)) {
           fail(`${plugin.id}@${version.version} has two ${artifact.platform} artifacts`);
         }
