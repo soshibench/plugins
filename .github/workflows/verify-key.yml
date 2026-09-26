@@ -2,8 +2,6 @@ name: Verify the signing key
 
 on:
   workflow_dispatch:
-  push:
-    branches: [verify-signing-key]
 
 jobs:
   verify:
