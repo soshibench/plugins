@@ -1,0 +1,98 @@
+name: Sign and list a release
+
+on:
+  workflow_dispatch:
+    inputs:
+      plugin_id:
+        description: Plugin id, e.g. acme.kv
+        required: true
+      version:
+        description: Version being listed, e.g. 1.2.0
+        required: true
+      engines_app:
+        description: Workbench version range this build supports, e.g. ">=0.1.0"
+        required: true
+        default: ">=0.0.1"
+      plugin_api:
+        description: Plugin API level the build targets
+        required: true
+        default: "1"
+      artifacts:
+        description: Space-separated <platform>=<url> pairs
+        required: true
+      display_name:
+        description: Display name (new listings only)
+        required: false
+      description:
+        description: One-line description (new listings only)
+        required: false
+      publisher:
+        description: Publisher (new listings only)
+        required: false
+      homepage:
+        description: Homepage URL (optional)
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install minisign
+        run: sudo apt-get update && sudo apt-get install -y minisign
+      - run: bun install --frozen-lockfile
+
+      - name: Restore the signing key
+        env:
+          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
+        run: |
+          install -m 600 /dev/null "$RUNNER_TEMP/registry.key"
+          printf '%s' "$MINISIGN_SECRET_KEY" > "$RUNNER_TEMP/registry.key"
+
+      - name: Sign the artifacts and update the index
+        env:
+          MINISIGN_SECRET_KEY_FILE: ${{ runner.temp }}/registry.key
+          MINISIGN_SECRET_KEY_PASSWORD: ${{ secrets.MINISIGN_SECRET_KEY_PASSWORD }}
+        run: |
+          args=()
+          for pair in ${{ inputs.artifacts }}; do
+            args+=(--artifact "$pair")
+          done
+          [ -n "${{ inputs.display_name }}" ] && args+=(--display-name "${{ inputs.display_name }}")
+          [ -n "${{ inputs.description }}" ] && args+=(--description "${{ inputs.description }}")
+          [ -n "${{ inputs.publisher }}" ] && args+=(--publisher "${{ inputs.publisher }}")
+          [ -n "${{ inputs.homepage }}" ] && args+=(--homepage "${{ inputs.homepage }}")
+          bun scripts/add-listing.ts \
+            --id "${{ inputs.plugin_id }}" \
+            --version "${{ inputs.version }}" \
+            --engines-app "${{ inputs.engines_app }}" \
+            --plugin-api "${{ inputs.plugin_api }}" \
+            "${args[@]}"
+
+      - name: Remove the signing key
+        if: always()
+        run: shred -u "$RUNNER_TEMP/registry.key" || rm -f "$RUNNER_TEMP/registry.key"
+
+      - name: Check the updated index
+        run: bun scripts/validate.ts
+
+      - name: Open the index-update pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="list/${{ inputs.plugin_id }}-${{ inputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add registry.json
+          git commit -m "List ${{ inputs.plugin_id }}@${{ inputs.version }}"
+          git push -u origin "$branch"
+          gh pr create \
+            --base main \
+            --title "List ${{ inputs.plugin_id }}@${{ inputs.version }}" \
+            --body "Signed by the release workflow. Validation runs on this PR."
