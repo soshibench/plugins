@@ -1,30 +1,5 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T09:26:11.930Z",
-  "plugins": [
-    {
-      "id": "test.kvmem",
-      "displayName": "KV Mem Fixture",
-      "description": "Dress rehearsal fixture, to be removed",
-      "publisher": "test",
-      "latest": "1.0.0",
-      "versions": [
-        {
-          "version": "1.0.0",
-          "engines": {
-            "app": ">=0.0.1",
-            "pluginApi": 1
-          },
-          "artifacts": [
-            {
-              "platform": "universal",
-              "url": "https://github.com/soshibench/plugins/releases/download/rehearsal-test.kvmem-1.0.0/test.kvmem-1.0.0.dbxplugin",
-              "sha256": "e35a82fda77a2f0ec961f3f111c0e432387b97b9ef1a1364831c5d2fa03a1df6",
-              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16QgwN+lu3MAXi/bbGOKzYV7DVV65F7OvVQdRTL3eDSpjdyrC75ykQ+t3dnWgxWCnSE0LolOmKuCHuNE7b6UD4A4=\ntrusted comment: timestamp:1790414771\tfile:1.0.0-universal.dbxplugin\thashed\nRE6QoU1OAV6f5kB5fj4iIUh15S4GDXrUNsimWkARZHxZaT/B3CbwO0/wSdYCYj4fZkReJNYVULsPLXQVplJZAw==\n"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "updatedAt": "2026-09-26T09:49:29.000Z",
+  "plugins": []
 }
