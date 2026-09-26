@@ -84,7 +84,7 @@ function validateShape(index: Index): void {
       for (const artifact of version.artifacts) {
         if (!KNOWN_PLATFORMS.includes(artifact.platform)) {
           fail(
-            `${plugin.id}@${version.version} lists platform ${artifact.platform}, which Workbench never asks for; use one of ${KNOWN_PLATFORMS.join(", ")}`,
+            `${plugin.id}@${version.version} lists platform ${artifact.platform}, which Soshi Bench never asks for; use one of ${KNOWN_PLATFORMS.join(", ")}`,
           );
         }
         if (platforms.has(artifact.platform)) {

@@ -7,11 +7,11 @@ be closed. What you send is a listing request; the signature is added here.
 ## What a plugin needs first
 
 - A public repository with a build that produces a `.dbxplugin` package per
-  platform it supports, via `bun scripts/pack-plugin.ts` from the Workbench
+  platform it supports, via `bun scripts/pack-plugin.ts` from the Soshi Bench
   repository.
 - A published release whose artifacts are downloadable over https at stable
   URLs — a GitHub release asset URL is ideal, since it never changes.
-- A manifest declaring the `pluginApi` level it targets and the Workbench
+- A manifest declaring the `pluginApi` level it targets and the Soshi Bench
   version range it supports.
 
 ## Requesting a listing
@@ -21,12 +21,12 @@ Open an issue titled `List <plugin id>@<version>` with:
 - the plugin id, display name, one-line description and publisher
 - the homepage, if there is one
 - the version being listed
-- the Workbench version range and `pluginApi` level the build targets
+- the Soshi Bench version range and `pluginApi` level the build targets
 - one download URL per platform, as `<platform>=<url>` pairs
 
 Platforms are `darwin-arm64`, `darwin-x64`, `linux-x64-gnu`,
 `linux-arm64-gnu`, `win32-x64-msvc`, or `universal` for a build with no native
-code. These are the exact tokens Workbench asks for, so a listing that uses
+code. These are the exact tokens Soshi Bench asks for, so a listing that uses
 any other spelling is rejected by CI and would be invisible in the app.
 
 ## What happens next

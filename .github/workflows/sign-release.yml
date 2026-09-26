@@ -10,7 +10,7 @@ on:
         description: Version being listed, e.g. 1.2.0
         required: true
       engines_app:
-        description: Workbench version range this build supports, e.g. ">=0.1.0"
+        description: Soshi Bench version range this build supports, e.g. ">=0.1.0"
         required: true
         default: ">=0.0.1"
       plugin_api:
