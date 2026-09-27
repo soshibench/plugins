@@ -32,6 +32,14 @@ on:
       homepage:
         description: Homepage URL (optional)
         required: false
+      target:
+        description: Index to list the release in
+        required: true
+        type: choice
+        options:
+          - registry.json
+          - staging.json
+        default: registry.json
 
 permissions:
   contents: write
@@ -47,6 +55,7 @@ env:
   DESCRIPTION: ${{ inputs.description }}
   PUBLISHER: ${{ inputs.publisher }}
   HOMEPAGE: ${{ inputs.homepage }}
+  TARGET: ${{ inputs.target }}
 
 jobs:
   sign:
@@ -84,6 +93,7 @@ jobs:
             --version "$VERSION" \
             --engines-app "$ENGINES_APP" \
             --plugin-api "$PLUGIN_API" \
+            --index "$TARGET" \
             "${args[@]}"
 
       - name: Remove the signing key
@@ -91,20 +101,20 @@ jobs:
         run: shred -u "$RUNNER_TEMP/registry.key" || rm -f "$RUNNER_TEMP/registry.key"
 
       - name: Check the updated index
-        run: bun scripts/validate.ts
+        run: bun scripts/validate.ts --index "$TARGET"
 
       - name: Open the index-update pull request
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch="list/$PLUGIN_ID-$VERSION"
+          branch="list/$PLUGIN_ID-$VERSION-${TARGET%.json}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add registry.json
-          git commit -m "List $PLUGIN_ID@$VERSION"
+          git add "$TARGET"
+          git commit -m "List $PLUGIN_ID@$VERSION in $TARGET"
           git push -u origin "$branch"
           gh pr create \
             --base main \
-            --title "List $PLUGIN_ID@$VERSION" \
+            --title "List $PLUGIN_ID@$VERSION in $TARGET" \
             --body "Signed by the release workflow. Validation runs on this PR."

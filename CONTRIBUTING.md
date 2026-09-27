@@ -35,7 +35,8 @@ any other spelling is rejected by CI and would be invisible in the app.
    package matches its source.
 2. The owner runs the **Sign and list a release** workflow with the values
    from the issue. It downloads each artifact, records its sha256, signs it
-   with the registry key, updates `registry.json`, and opens a pull request.
+   with the registry key, updates the index chosen by its `target` input
+   (default `registry.json`), and opens a pull request.
 3. CI on that pull request re-downloads every artifact and checks both the
    digest and the signature.
 4. The owner merges. The app picks the new listing up on its next refresh.

@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "validate": "bun scripts/validate.ts",
-    "validate:offline": "bun scripts/validate.ts --offline"
+    "validate:offline": "bun scripts/validate.ts --offline",
+    "validate:staging": "bun scripts/validate.ts --index staging.json"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const ROOT = join(import.meta.dir, "..");
-const INDEX_FILE = join(ROOT, "registry.json");
+const INDEX_FILES = ["registry.json", "staging.json"];
 const SCHEMA_FILE = join(ROOT, "schema", "registry.schema.json");
 const PUBLIC_KEY_FILE = join(ROOT, "registry.pub");
 
@@ -159,8 +159,22 @@ async function validateArtifacts(index: Index): Promise<void> {
   }
 }
 
+function indexName(argv: string[]): string {
+  const at = argv.indexOf("--index");
+  if (at === -1) {
+    return "registry.json";
+  }
+  const value = argv[at + 1];
+  if (!value || !INDEX_FILES.includes(value)) {
+    console.error(`--index must be one of: ${INDEX_FILES.join(", ")}`);
+    process.exit(1);
+  }
+  return value;
+}
+
 const offline = process.argv.includes("--offline");
-const index = (await Bun.file(INDEX_FILE).json()) as Index;
+const indexFile = indexName(process.argv.slice(2));
+const index = (await Bun.file(join(ROOT, indexFile)).json()) as Index;
 
 await validateSchema(index);
 validateShape(index);
@@ -169,9 +183,9 @@ if (!offline) {
 }
 
 if (problems.length > 0) {
-  console.error(`registry.json is not valid:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
+  console.error(`${indexFile} is not valid:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
   process.exit(1);
 }
 
 const count = index.plugins.length;
-console.log(`registry.json is valid: ${count} plugin${count === 1 ? "" : "s"} listed`);
+console.log(`${indexFile} is valid: ${count} plugin${count === 1 ? "" : "s"} listed`);
