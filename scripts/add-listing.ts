@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const ROOT = join(import.meta.dir, "..");
-const INDEX_FILE = join(ROOT, "registry.json");
+const INDEX_FILES = ["registry.json", "staging.json"];
 const SECRET_KEY_ENV = "MINISIGN_SECRET_KEY_FILE";
 const PASSWORD_ENV = "MINISIGN_SECRET_KEY_PASSWORD";
 
@@ -45,6 +45,7 @@ interface Args {
   description?: string;
   publisher?: string;
   homepage?: string;
+  index: string;
 }
 
 function usage(): never {
@@ -54,7 +55,8 @@ function usage(): never {
       "  --id <plugin id> --version <semver> \\",
       '  --engines-app "<semver range>" --plugin-api <n> \\',
       "  --artifact <platform>=<url> [--artifact ...] \\",
-      "  [--display-name <name> --description <text> --publisher <name> --homepage <url>]",
+      "  [--display-name <name> --description <text> --publisher <name> --homepage <url>] [--index <file>]",
+      "  --index is registry.json (default) or staging.json",
       "",
       `Signs each artifact with the key at $${SECRET_KEY_ENV}, unlocked with $${PASSWORD_ENV}.`,
     ].join("\n"),
@@ -90,6 +92,11 @@ function parseArgs(argv: string[]): Args {
     usage();
   }
 
+  const index = flags["--index"] ?? "registry.json";
+  if (!INDEX_FILES.includes(index)) {
+    usage();
+  }
+
   return {
     id,
     version,
@@ -100,6 +107,7 @@ function parseArgs(argv: string[]): Args {
     description: flags["--description"],
     publisher: flags["--publisher"],
     homepage: flags["--homepage"],
+    index,
   };
 }
 
@@ -165,7 +173,8 @@ function newestVersion(versions: Version[]): string {
 
 const args = parseArgs(process.argv.slice(2));
 const signingKey = requireSigningKey();
-const index = JSON.parse(await readFile(INDEX_FILE, "utf8")) as Index;
+const indexFile = join(ROOT, args.index);
+const index = JSON.parse(await readFile(indexFile, "utf8")) as Index;
 
 let plugin = index.plugins.find((candidate) => candidate.id === args.id);
 if (plugin?.versions.some((candidate) => candidate.version === args.version)) {
@@ -207,5 +216,5 @@ plugin.latest = newestVersion(plugin.versions);
 index.plugins.sort((left, right) => left.id.localeCompare(right.id));
 index.updatedAt = new Date().toISOString();
 
-await writeFile(INDEX_FILE, `${JSON.stringify(index, null, 2)}\n`, "utf8");
-console.log(`Listed ${args.id}@${args.version} (${artifacts.length} artifact(s))`);
+await writeFile(indexFile, `${JSON.stringify(index, null, 2)}\n`, "utf8");
+console.log(`Listed ${args.id}@${args.version} in ${args.index} (${artifacts.length} artifact(s))`);

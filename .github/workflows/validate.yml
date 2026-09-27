@@ -16,3 +16,5 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: Validate registry.json
         run: bun scripts/validate.ts
+      - name: Validate staging.json
+        run: bun scripts/validate.ts --index staging.json

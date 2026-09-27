@@ -21,6 +21,19 @@ The app fetches the index from:
 https://raw.githubusercontent.com/soshibench/plugins/main/registry.json
 ```
 
+## Staging
+
+`staging.json` is an unlisted index for testing releases before they go
+public. It is signed with the same key.
+
+To test, add a registry source in Soshi Bench (Settings → Plugins → Registry
+sources) with the index URL
+`https://raw.githubusercontent.com/soshibench/plugins/main/staging.json` and
+the key in `registry.pub`.
+
+To list a release there, run "Sign and list a release" with `target` set to
+`staging.json`.
+
 Every listed artifact carries a sha256 digest and a detached minisign
 signature. The app refuses any download whose digest or signature does not
 match, and CI on this repository checks the same two things for every listing
