@@ -1,5 +1,30 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-26T00:00:00.000Z",
-  "plugins": []
+  "updatedAt": "2026-09-27T08:28:13.532Z",
+  "plugins": [
+    {
+      "id": "test.staging-proof",
+      "displayName": "Staging proof",
+      "description": "Throwaway staging test",
+      "publisher": "dbx-test-fixtures",
+      "latest": "0.1.0",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "engines": {
+            "app": ">=0.0.1",
+            "pluginApi": 1
+          },
+          "artifacts": [
+            {
+              "platform": "universal",
+              "url": "https://github.com/soshibench/plugins/releases/download/plugin/zz-staging%400.1.0/test.staging-proof-0.1.0.dbxplugin",
+              "sha256": "96d35feb6f7cb88d7f8e6aaeffe4846ba815e759f0877e3ce46f991a537b44f2",
+              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16S4SV/skZ38SGUWrV3sMc77rcSZN4VDY8filQlPRmFIh5JhZbRP12PdoG8Pan+2YBZNLMzE6JZk2ZM0tkd2eCgY=\ntrusted comment: timestamp:1790497693\tfile:0.1.0-universal.dbxplugin\thashed\nbWjVnxcIr3VG/BAqXmQHd1MY2iwbczU64kvyXXVHIfu37T8Oeb/dX1nk04hhbs2Cj07FuEWo2y4LOSoBGqhlDA==\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
