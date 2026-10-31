@@ -1,0 +1,52 @@
+name: PR-Agent review
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-agent-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check OpenAI credentials
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+        run: |
+          if [ -z "$OPENAI_KEY" ]; then
+            echo "::error::Add the OPENAI_KEY repository secret to enable PR-Agent reviews."
+            exit 1
+          fi
+      - name: Post review comments
+        uses: docker://pragent/pr-agent@sha256:b1ed6e8de56eb4d6e4169ee0d5c209bb5ed1ef071a01c0c042c64b80192a785c
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          config.model: gpt-6.1-sol
+          config.fallback_models: "[]"
+          config.repo_context_files: '["AGENTS.md", "CONTRIBUTING.md", "KEYS.md"]'
+          config.repo_context_from_default_branch: "true"
+          config.enable_auto_approval: "false"
+          config.restricted_mode: "true"
+          github_action_config.auto_review: "true"
+          github_action_config.auto_describe: "false"
+          github_action_config.auto_improve: "false"
+          github_action_config.handle_push_trigger: "true"
+          github_action_config.push_commands: '["/review"]'
+          pr_reviewer.enable_review_labels_security: "false"
+          pr_reviewer.enable_review_labels_effort: "false"
