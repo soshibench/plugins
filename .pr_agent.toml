@@ -1,0 +1,20 @@
+[pr_reviewer]
+persistent_comment = true
+enable_help_text = false
+extra_instructions = """
+Follow AGENTS.md when present as the source of repository conventions.
+Review this repository as the Soshi Bench plugin registry and its Bun tooling.
+Follow CONTRIBUTING.md and KEYS.md. Check schema compatibility, immutable
+published versions, per-platform artifacts, HTTPS URLs, SHA-256 digests,
+minisign verification, staging isolation, and signing workflow permissions.
+Never recommend bypassing signature or digest validation.
+Focus on actionable bugs, security problems, and regressions introduced by
+the pull request. Explain concrete impact and reference affected code.
+Avoid speculative findings and cosmetic noise. Do not infer that a model or
+API is unsupported solely from memory; require concrete evidence.
+No comments in production code. Commit messages must be concise, imperative,
+within 80 columns, and contain no agent attribution. All merges into main or
+master must go through a pull request; never recommend a local merge.
+Publish review feedback only. Do not change code, the PR title or description,
+labels, assignees, or milestones, and do not approve or merge the PR.
+"""
