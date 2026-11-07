@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-07T12:05:08.763Z",
+  "updatedAt": "2026-11-07T12:06:54.010Z",
   "plugins": [
     {
       "id": "dbx.mysql",
@@ -31,7 +31,7 @@
       "displayName": "Postgres",
       "description": "Browse, query and edit PostgreSQL databases.",
       "publisher": "jamby77",
-      "latest": "1.0.0",
+      "latest": "1.0.1",
       "versions": [
         {
           "version": "1.0.0",
@@ -45,6 +45,21 @@
               "url": "https://github.com/soshibench/plugins/releases/download/plugin/postgres%401.0.0/dbx.postgres-1.0.0.dbxplugin",
               "sha256": "dfe45ea00738f855a7281e97aa6da9241fe97b797ce30594a1001a8fb441a254",
               "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16SjAswOGcuDb06AJsHKv9UDGWzdcpbFEHTcqAl6nLqJLRB+VsjBzUZXyOYe3ZaSZQAzNNWbWEdmY/qwzMAE8AgA=\ntrusted comment: timestamp:1793973334\tfile:1.0.0-universal.dbxplugin\thashed\njenxlnmhtXMNQnm8BE+W9U7HUm/ZrJUR2qADVoDCzc5WC0HJQrhbY81W7V4tLr0piWubSVtCeKsSdPPyrgMXAA==\n"
+            }
+          ]
+        },
+        {
+          "version": "1.0.1",
+          "engines": {
+            "app": ">=0.0.1 <2.0.0",
+            "pluginApi": 1
+          },
+          "artifacts": [
+            {
+              "platform": "universal",
+              "url": "https://github.com/soshibench/plugins/releases/download/plugin/postgres%401.0.1/dbx.postgres-1.0.1.dbxplugin",
+              "sha256": "6bffe266b6a83029c54f87f2728c644eec902633a7d3609c2f0bf0bcad1e5161",
+              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16U+0cGdSV77iJSiHadr4TFMp01XMmsEOohDKIGUUnVufx9O23TwAcsyNqegVHm9I5+Se5CEB3gQKwprgaqvxOQ8=\ntrusted comment: timestamp:1794053214\tfile:1.0.1-universal.dbxplugin\thashed\n9lOnq/FbeCyAnLJCakwVt1qHIvflbAURJyTbaSNql8Bj6U5CnwDRno7Wg2A4BqUitdFB8kCipoSDYckH2woNCg==\n"
             }
           ]
         }
