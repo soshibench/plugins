@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-06T13:58:47.127Z",
+  "updatedAt": "2026-11-07T12:04:05.127Z",
   "plugins": [
     {
       "id": "dbx.mysql",
@@ -55,7 +55,7 @@
       "displayName": "Redis",
       "description": "Browse and edit Redis keys and run Redis commands.",
       "publisher": "jamby77",
-      "latest": "1.0.0",
+      "latest": "1.0.1",
       "versions": [
         {
           "version": "1.0.0",
@@ -69,6 +69,21 @@
               "url": "https://github.com/soshibench/plugins/releases/download/plugin/redis%401.0.0/dbx.redis-1.0.0.dbxplugin",
               "sha256": "f9dbe1854a180985127aaf12e352252335612e0f2b978c92ab71e17e3eed1a23",
               "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16aSoN2ZOtkA2A+QMroE1D2FGr4CBYSVoLxMlhYJWTI1fU9OHySsPNzGyTMGl0HvzAUMLaaw9HvGy32J0HasXuQQ=\ntrusted comment: timestamp:1793973434\tfile:1.0.0-universal.dbxplugin\thashed\nSlX5+b87q5W7PQfn8nllQjmULGqS31kFYcI7F4KTQ3sEvgrzyDLxAIN/itNM6KGJdg97O3L/mH5tILnL1s7MDA==\n"
+            }
+          ]
+        },
+        {
+          "version": "1.0.1",
+          "engines": {
+            "app": ">=0.0.1 <2.0.0",
+            "pluginApi": 1
+          },
+          "artifacts": [
+            {
+              "platform": "universal",
+              "url": "https://github.com/soshibench/plugins/releases/download/plugin/redis%401.0.1/dbx.redis-1.0.1.dbxplugin",
+              "sha256": "ddf5d154de0870cf6823aa63b7980aece0453e21966be6182644e5f797cec887",
+              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16dEufJOxAIbXw9elgDvIBrIhQKqwKq4D7Q0oWz02wwgn1Ld8Cmk1nHPnjCnlOAY4EFsAX3eOjB74vBYEz8rqsQI=\ntrusted comment: timestamp:1794053045\tfile:1.0.1-universal.dbxplugin\thashed\nR5oEtRAsV7KeRDew9dUYxsFL/CIbXXS21LCAS5MBOLYpcv6/aXxFLqw5cZTrfUYYbMpKlEWCAmK1jVCzclkzDQ==\n"
             }
           ]
         }
