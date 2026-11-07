@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-07T12:04:05.127Z",
+  "updatedAt": "2026-11-07T12:05:08.763Z",
   "plugins": [
     {
       "id": "dbx.mysql",
@@ -94,7 +94,7 @@
       "displayName": "SQLite",
       "description": "Browse, query and edit SQLite files and Turso databases.",
       "publisher": "jamby77",
-      "latest": "1.0.0",
+      "latest": "1.0.1",
       "versions": [
         {
           "version": "1.0.0",
@@ -108,6 +108,21 @@
               "url": "https://github.com/soshibench/plugins/releases/download/plugin/sqlite%401.0.0/dbx.sqlite-1.0.0.dbxplugin",
               "sha256": "647e0479925e3001cb46bb0d46e44f7ac49d65bcfd628c1c0fef64fc7ed58f0b",
               "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16WQAhxIyKi7RiadTJxbgn7vK3+eQ/VgC2q4LoqNstemnvDE6pDjy3/WFA2qBY9V1Rjk8wIerz2oJUsHZ0rvN0wc=\ntrusted comment: timestamp:1793973527\tfile:1.0.0-universal.dbxplugin\thashed\nCvov+xt4VW2OXSZ3cL8OAoioqITFWxL8LIW65kl8ZfdwzAlFoPMcu/ezSgpYvLsOfazmxgDPp61sNjHmvfQcDQ==\n"
+            }
+          ]
+        },
+        {
+          "version": "1.0.1",
+          "engines": {
+            "app": ">=0.0.1 <2.0.0",
+            "pluginApi": 1
+          },
+          "artifacts": [
+            {
+              "platform": "universal",
+              "url": "https://github.com/soshibench/plugins/releases/download/plugin/sqlite%401.0.1/dbx.sqlite-1.0.1.dbxplugin",
+              "sha256": "8228d115a88bcd4cec8be64117f1629f2e93dc804b61ec35acacbf5257f40204",
+              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16VhAHbzBjM8u1OmP4fIhfZw8uFNPd7vOo2PhDBMbQZylS5tJP+2tNEirMi5OmI8olYB9izfHI0U4nGYItXsEugg=\ntrusted comment: timestamp:1794053108\tfile:1.0.1-universal.dbxplugin\thashed\nEt51lNyOPXpkNICfkUryOkjZxwaglyK3LTxz3p1o5sud8VYaq6y0TnzELgAESiCUIRz7FCRZA31s5tDF3Y6VAA==\n"
             }
           ]
         }
