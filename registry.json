@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-07T12:06:54.010Z",
+  "updatedAt": "2026-11-07T12:08:04.082Z",
   "plugins": [
     {
       "id": "dbx.mysql",
       "displayName": "MySQL",
       "description": "Browse, query and edit MySQL and MariaDB databases.",
       "publisher": "jamby77",
-      "latest": "1.0.0",
+      "latest": "1.0.1",
       "versions": [
         {
           "version": "1.0.0",
@@ -21,6 +21,21 @@
               "url": "https://github.com/soshibench/plugins/releases/download/plugin/mysql%401.0.0/dbx.mysql-1.0.0.dbxplugin",
               "sha256": "759a17228e0f5f39e82f46c2c956500e4b5b4d25deeb62174cc0b721bd76081e",
               "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16fZ6XvUtviORFLY/yatCHQLj+IABYMJwBNyyuLaJbWyIPbLXY4ixzk1OLjfwLrxaCFLb1jkpUWobo9F7IHSUggo=\ntrusted comment: timestamp:1793973230\tfile:1.0.0-universal.dbxplugin\thashed\nUF2sdcmE/b9EALpPXrRMlZw7cFb2xsoR7bnxH/MNW4pNHoaniB2BiTMjmstRmEgAumGb3LdlLmUuGhlvW6qRCQ==\n"
+            }
+          ]
+        },
+        {
+          "version": "1.0.1",
+          "engines": {
+            "app": ">=0.0.1 <2.0.0",
+            "pluginApi": 1
+          },
+          "artifacts": [
+            {
+              "platform": "universal",
+              "url": "https://github.com/soshibench/plugins/releases/download/plugin/mysql%401.0.1/dbx.mysql-1.0.1.dbxplugin",
+              "sha256": "fff686de472cc86c44a8d1d6c6bbfbb80620a61091705a6001373bd825c5acf5",
+              "signature": "untrusted comment: signature from minisign secret key\nRURjceOjGYf16eQKYuYGnavM0I/kdCGPKi6OjEDY3q86g2o+8k9Pafv1l0oqFzf/alky7n4RR4NcA1vB5fpERwnGdPCHr/IjTQ4=\ntrusted comment: timestamp:1794053284\tfile:1.0.1-universal.dbxplugin\thashed\nZFSRR1SPefgxU6RImHYgQfpUhB3DT6s8oOgtXKVXZ5H82pwPeaDBnwBIy2aYv+iUj+Afh+BFzzkTRv36fDBlAw==\n"
             }
           ]
         }
